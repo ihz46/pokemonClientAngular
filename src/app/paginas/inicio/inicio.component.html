@@ -5,7 +5,14 @@
 
     </div>
     <div class="col">
-        <input type="checkbox">
+        <ul class="list-group">
+            <li *ngFor="let h of habilidades" class="list-group-item {{pokemon==pokemonSeleccionado?'active':''}}"
+                [(ngModel)]="habilidad">
+                <input type="checkbox" class="checkbox">{{h}}
+
+            </li>
+        </ul>
+
     </div>
 </div>
 <!--Cierre primer row-->
@@ -15,7 +22,7 @@
         <ul class="list-group">
             <li *ngFor="let pokemon of listaPokemon"
                 class="list-group-item {{pokemon==pokemonSeleccionado?'active':''}}"
-                (click)="seleccionarPokemon(pokemon)">
+                (click)="seleccionarPokemon(pokemon);comprobarPokemon(pokemon)">
                 <div class=" listado">{{pokemon.nombre}}
                 </div>
 
@@ -23,10 +30,17 @@
         </ul>
     </div>
     <div class="col">
-        <div class="card" style="width: 18rem;">
+        <div class="card" *ngIf="hayPokemon" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">{{pokemonSeleccionado.nombre}}</h5>
+                <h5 class="card-title">{{pokemonSeleccionado.id}} - {{pokemonSeleccionado.nombre}}</h5>
+                <img class="card-img-top" src="{{pokemonSeleccionado.imagen}}" alt="Card image cap">
                 <p class="card-text">Habilidades</p>
+                <ul class="list-group">
+                    <li *ngFor="let habilidades of pokemonSeleccionado.habilidades" class="list-group-item">
+                        <div class="listaHabilidades">{{habilidades.nombre}}</div>
+
+                    </li>
+                </ul>
 
             </div>
         </div>
