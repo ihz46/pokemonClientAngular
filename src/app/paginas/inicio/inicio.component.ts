@@ -14,11 +14,17 @@ export class InicioComponent implements OnInit {
   pokemonSeleccionado: Pokemon;
   habilidades: Set<any>;
   hayPokemon: boolean;
+  mensaje: string;
+
+  //Busqueda por nombre
+  pokemonBuscado: string;
 
   constructor(private pokemonService: PokemonService) {
     console.trace('InicioComponent constructor')
     this.listaPokemon = new Array<Pokemon>();
     this.habilidades = new Set<any>();
+    this.pokemonBuscado = '';
+    this.mensaje = "Este es el listado de pokemons: "
 
   }//constructor()
 
@@ -46,11 +52,9 @@ export class InicioComponent implements OnInit {
         console.debug(data);
         this.listaPokemon = data;
 
-        data.forEach(habilidad => {
-          console.log(habilidad);
-          return this.habilidades = data.map(habilidad => habilidad.nombre);
-
-        });
+        this.habilidades = data.reduce((previous, currently, index, array) => {
+          return previous.concat(currently.habilidades);
+        }, []);
 
         console.debug('habilidades %o', this.habilidades)
       },
@@ -64,7 +68,9 @@ export class InicioComponent implements OnInit {
     )
   }//obtenerListado()
 
+  comprobarBusqueda() {
 
+  }
 
   seleccionarPokemon(pokemon) {
     console.log('Click seleccionarPokemon');

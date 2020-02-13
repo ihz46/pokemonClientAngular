@@ -9,6 +9,10 @@ import { InicioComponent } from './paginas/inicio/inicio.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { FooterComponent } from './componentes/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PokemonPipe } from './pipes/pokemon.pipe';
+import { LoginComponent } from './paginas/login/login.component';
+import { PrivadoComponent } from './paginas/privado/privado.component';
+import { UsuarioService } from './services/usuario.service';
 
 
 @NgModule({
@@ -16,7 +20,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     InicioComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    PokemonPipe,
+    LoginComponent,
+    PrivadoComponent
+
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-6 offset-md-3 bg-primary text-white p-4">
+        <form action="login" [formGroup]="formulario" (ngSubmit)="enviar(formulario.value)">
+
+            <div class="form-group  text-center">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" formControlName="nombre" placeholder="nombre" autofocus>
+
+                <small *ngIf="formulario.controls.nombre.invalid && formulario.controls.nombre.dirty"
+                    class="text-danger mb-2">Mínimo 2 carácteres, máximo 100</small>
+                <small *ngIf="formulario.controls.nombre.valid " class="text-success mb-2">Nombre correcto</small>
+            </div>
+            <!--CIERRE NOMBRE-->
+
+            <div class="form-group text-center">
+                <label for="pass">Contraseña:</label>
+                <input type="password" formControlName="pass" placeholder="password" class="form-control">
+                <small *ngIf="formulario.controls.pass.invalid && formulario.controls.pass.dirty"
+                    class="text-danger mb-2">Mínimo
+                    6 carácteres, máximo 8</small>
+                <small *ngIf="formulario.controls.pass.valid " class="text-success mb-2">Contraseña correcta</small>
+            </div>
+
+
+            <button type="submit" [disabled]="formulario.invalid" class="btn btn-success btn-block">Enviar</button>
+        </form>
+    </div>
