@@ -34,6 +34,10 @@ export class PrivadoComponent implements OnInit {
     //Inicializamos el pokemon que vamos a utilizar 
     this.pokemon = new Pokemon();
 
+    // Mensajes
+    this.mensaje = 'Listado de pokemon disponibles:';
+
+    this.tipoMensaje = 'primary';
 
     // Construimos el formulario:
     this.formulario = this.builder.group({
@@ -74,6 +78,8 @@ export class PrivadoComponent implements OnInit {
 
       error => {
         console.warn('Error al obtener el listado de pokemon');
+        this.mensaje = 'Error al obtener el listado de pokemons';
+        this.tipoMensaje = 'danger';
       },
       () => {
         console.trace('Estamos intentando obtener el listado');
@@ -93,11 +99,15 @@ export class PrivadoComponent implements OnInit {
     this.pokemonService.deletePokemon(this.pokemonSeleccionado).subscribe(
       data => {
         console.debug('Datos obtenidos %o', data);
+        this.mensaje = 'Se he eliminado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
+        this.tipoMensaje = 'success';
         this.obtenerListado();
       },
 
       error => {
         console.debug('Petición erronea %o', error);
+        this.mensaje = 'Error al eliminar el pokemon';
+        this.tipoMensaje = 'danger';
       },
 
       () => {
@@ -105,6 +115,8 @@ export class PrivadoComponent implements OnInit {
       }
     );
   }
+
+  // Método que servirá para realizar el submit del formulario (create y update)
   enviarFormulario(datosEnviados) {
     console.trace('Enviar formulario %o', datosEnviados);
 
@@ -116,11 +128,15 @@ export class PrivadoComponent implements OnInit {
       this.pokemonService.createPokemon(this.pokemon).subscribe(
         data => {
           console.debug('Datos obtenidos %o', data);
+          this.tipoMensaje = 'success';
+          this.mensaje = 'Se he creado correctamente el pokemon ' + this.pokemon.nombre + '.';
           this.obtenerListado();
         },
 
         error => {
           console.debug('Petición erronea %o', error);
+          this.mensaje = 'Error al crear el pokemon ' + this.pokemon.nombre + '.';
+          this.tipoMensaje = 'danger';
         },
 
         () => {
@@ -135,11 +151,15 @@ export class PrivadoComponent implements OnInit {
       this.pokemonService.updatePokemon(this.pokemon).subscribe(
         data => {
           console.debug('Datos obtenidos %o', data);
+          this.tipoMensaje = 'success';
+          this.mensaje = 'Se he actualizado correctamente el pokemon ' + this.pokemon.nombre + '.';
           this.obtenerListado();
         },
 
         error => {
           console.debug('Petición erronea %o', error);
+          this.mensaje = 'Error al actualizar el pokemon' + this.pokemon.nombre + '.';
+          this.tipoMensaje = 'danger';
         },
 
         () => {
