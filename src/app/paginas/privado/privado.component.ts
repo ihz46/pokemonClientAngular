@@ -76,11 +76,34 @@ export class PrivadoComponent implements OnInit {
   limpiarFormulario() {
     console.trace('Limpiar formulario')
     this.formulario.get('nombre').setValue('');
+    this.formulario.get('id').setValue(0);
     this.pokemonSeleccionado = new Pokemon();
   }
 
   enviarFormulario(datosEnviados) {
     console.trace('Enviar formulario %o', datosEnviados);
+    if (datosEnviados.id === 0) {
+      let p = new Pokemon();
+      p.nombre = (datosEnviados.nombre);
+
+      //llamamos al service para crear
+      this.pokemonService.createPokemon(p).subscribe(
+        data => {
+          console.debug('Datos obtenidos %o', data);
+          this.listaPokemon.push(data);
+        },
+
+        error => {
+          console.debug('Petición erronea %o', error);
+        },
+
+        () => {
+          console.debug('Finaliza la petición')
+        }
+      );
+    } else {
+      //Llamamos al service para actualizar
+    }
   }//enviarFormulario(datosEnviados)
 
 }//PrivadoComponent

@@ -3,9 +3,10 @@ import { NumberFormatStyle } from '@angular/common';
 export class Pokemon {
 
     id: number;
-
     nombre: string;
+
     imagen: string;
+
     habilidades: Array<String>;
 
 
@@ -16,7 +17,6 @@ export class Pokemon {
         this.imagen = 'https://bolavip.com/__export/1569190757437/sites/bolavip/img/2019/09/22/ditto_crop1569190757042.jpg_1693159006.jpg';
         this.habilidades = [];
     }
-
 
 
 
