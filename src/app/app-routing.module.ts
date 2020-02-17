@@ -28,6 +28,6 @@ export const RUTAS = [
   },
   {
     "enlace": "privado",
-    "nombre": "Privado"
+    "nombre": "BackOffice"
   }
 ];

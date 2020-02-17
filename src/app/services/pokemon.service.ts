@@ -2,11 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IPokemonService } from './Ipokemon.service';
 import { Observable } from 'rxjs';
+import { Pokemon } from '../model/pokemon';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService implements IPokemonService {
+
+  createPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/'
+    return this.http.post<Pokemon>(url, pokemon);
+
+  }
+  updatePokemon(id: number, nombre: string): Observable<Pokemon> {
+    throw new Error("Method not implemented.");
+  }
 
 
 
@@ -28,7 +38,7 @@ export class PokemonService implements IPokemonService {
     console.trace('PokemonService getPokemon ' + url);
     return this.http.get(url);
   }
-  getCaracteristicas(id: number): Observable<any> {
+  getCaracteristicas(id: number): Observable<Pokemon> {
     throw new Error("Method not implemented.");
   }
   getById(id: number) {
