@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col">
         <div class="alert alert-primary" role="alert">
-            This is a primary alert—check it out!
+            {{mensaje}}
         </div>
     </div>
     <div class="col">
@@ -17,7 +17,7 @@
             <li class="list-group-item {{(p == pokemonSeleccionado)?'active': ''}}" (click)="seleccionarPokemon(p)"
                 *ngFor="let p of listaPokemon">
                 {{p.id}}-{{p.nombre}}
-                <button class="fas fa-trash-alt" (click)="eliminarPokemon(p)"></button></li>
+                <button class="fas fa-trash-alt" (click)="eliminarPokemon(pokemonSeleccionado)"></button></li>
         </ul>
     </div>
     <div class="col">

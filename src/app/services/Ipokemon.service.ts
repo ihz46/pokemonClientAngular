@@ -14,20 +14,40 @@ export interface IPokemonService {
      * @param nombre: string, nombre del pokemon buscado
      * 
      */
-    getPokemon(nombre: string): Observable<Pokemon>
+    getPokemon(nombre: string): Observable<Pokemon>;
 
     /**
      * Recupera un JSON con las caracteristicas de un Pokemon
      * @param id: number - es el identificador de un pokemon
      * @see GET /api/v2/characteristic/{id}/
      */
-    getCaracteristicas(id: number): Observable<Pokemon>
+    getCaracteristicas(id: number): Observable<Pokemon>;
 
-    getById(id: number);
+    /**
+     * Recupera el detalle de un Pokemon
+     * @param id del pokemon que se quiere recuperar
+     * @return pokemon encontrado
+     */
+    getById(id: number): Observable<Pokemon>;
 
-    createPokemon(pokemon: Pokemon): Observable<Pokemon>
+    /**
+     * Crea un pokemon 
+     * @param pokemon 
+     * @return Pokemon creado
+     */
+    createPokemon(pokemon: Pokemon): Observable<Pokemon>;
 
-    updatePokemon(id: number, nombre: string): Observable<Pokemon>
+    /**
+     * Actualiza el pokemon 
+     * @param pokemon 
+     * @return pokemon actualizado
+     */
+    updatePokemon(pokemon: Pokemon): Observable<Pokemon>;
 
-
+    /**
+     * Elimina un pokemon
+     * @param pokemon 
+     * @return pokemon eliminado
+     */
+    deletePokemon(pokemon: Pokemon): Observable<Pokemon>;
 }

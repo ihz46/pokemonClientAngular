@@ -8,25 +8,35 @@ import { Pokemon } from '../model/pokemon';
   providedIn: 'root'
 })
 export class PokemonService implements IPokemonService {
+      
+  constructor(private http: HttpClient) {
+    console.trace('PokemonService constructor');
+  }// Constructor
 
+
+  // Creamos un pokemon
   createPokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/'
+    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/';
     return this.http.post<Pokemon>(url, pokemon);
 
   }
-  updatePokemon(id: number, nombre: string): Observable<Pokemon> {
-    throw new Error("Method not implemented.");
+  
+  // Eliminamos un pokemon
+  deletePokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
+    console.debug(url);
+    return this.http.delete<Pokemon>(url);
   }
 
-
-
-  constructor(private http: HttpClient) {
-    console.trace('PokemonService constructor');
-  }//Constructor
-
+  // Actualizamos un pokemon
+  updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
+    return this.http.put<Pokemon>(url,pokemon);
+  }
+ 
   //Obtenemos el listado de todos los pokemons
   getAll(): Observable<any> {
-    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/'
+    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/';
     console.trace('PokemonService getAll ' + url);
     return this.http.get(url);
   }
@@ -41,7 +51,8 @@ export class PokemonService implements IPokemonService {
   getCaracteristicas(id: number): Observable<Pokemon> {
     throw new Error("Method not implemented.");
   }
-  getById(id: number) {
+
+  getById(id: number): Observable<Pokemon> {
     throw new Error("Method not implemented.");
   }
 
