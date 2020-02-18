@@ -25,7 +25,7 @@
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control mb-3" formControlName="nombre" autofocus>
-
+                <small class="form-text text-muted">Mínimo 2 y máximo 50 carácteres</small>
                 <button type="submit" [disabled]="formulario.invalid"
                     class="btn btn-primary btn-block">{{(pokemonSeleccionado.id===0)?'Crear':'Actualizar'}}</button>
             </div>
