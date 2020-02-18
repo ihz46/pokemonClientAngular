@@ -17,15 +17,14 @@
             <li class="list-group-item {{(p == pokemonSeleccionado)?'active': ''}}" (click)="seleccionarPokemon(p)"
                 *ngFor="let p of listaPokemon">
                 {{p.id}}-{{p.nombre}}
-                <button class="fas fa-trash-alt" (click)="eliminarPokemon(pokemonSeleccionado)"></button></li>
+                <button class="fas fa-trash-alt" (click)="eliminarPokemon(p)"></button></li>
         </ul>
     </div>
     <div class="col">
         <form action="enviar" [formGroup]="formulario" (ngSubmit)="enviarFormulario(formulario.value)">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control mb-3" formControlName="nombre" autofocus
-                    value="{{pokemonSeleccionado.nombre}}">
+                <input type="text" class="form-control mb-3" formControlName="nombre" autofocus>
 
                 <button type="submit" [disabled]="formulario.invalid"
                     class="btn btn-primary btn-block">{{(pokemonSeleccionado.id===0)?'Crear':'Actualizar'}}</button>

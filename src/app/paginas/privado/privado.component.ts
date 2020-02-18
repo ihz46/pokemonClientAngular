@@ -15,7 +15,7 @@ export class PrivadoComponent implements OnInit {
   pokemonSeleccionado: Pokemon;
   pokemon: Pokemon;
 
- // Formulario
+  // Formulario
 
   formulario: FormGroup;
 
@@ -28,7 +28,7 @@ export class PrivadoComponent implements OnInit {
     // Inicializamos la lista
     this.listaPokemon = [];
 
-     // Inicializamos el pokemon seleccionado
+    // Inicializamos el pokemon seleccionado
     this.pokemonSeleccionado = new Pokemon();
 
     //Inicializamos el pokemon que vamos a utilizar 
@@ -95,25 +95,31 @@ export class PrivadoComponent implements OnInit {
     this.pokemonSeleccionado = new Pokemon();
   }
 
-  eliminarPokemon(pokemon){
-    this.pokemonService.deletePokemon(this.pokemonSeleccionado).subscribe(
-      data => {
-        console.debug('Datos obtenidos %o', data);
-        this.mensaje = 'Se he eliminado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
-        this.tipoMensaje = 'success';
-        this.obtenerListado();
-      },
+  eliminarPokemon(pokemon) {
+    //Ventana modal para confirmar que se desea eliminar el pokemon
+    let opcion = confirm('¿Estás seguro de eliminar el pokemon '.concat(pokemon.nombre).concat('?'));
+    console.debug('Pokemon %o', pokemon)
+    if (opcion) {
+      this.pokemonService.deletePokemon(this.pokemonSeleccionado).subscribe(
+        data => {
+          console.debug('Datos obtenidos %o', data);
+          this.mensaje = 'Se he eliminado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
+          this.tipoMensaje = 'success';
+          this.obtenerListado();
+        },
 
-      error => {
-        console.debug('Petición erronea %o', error);
-        this.mensaje = 'Error al eliminar el pokemon';
-        this.tipoMensaje = 'danger';
-      },
+        error => {
+          console.debug('Petición erronea %o', error);
+          this.mensaje = 'Error al eliminar el pokemon';
+          this.tipoMensaje = 'danger';
+        },
 
-      () => {
-        console.debug('Finaliza la petición')
-      }
-    );
+        () => {
+          console.debug('Finaliza la petición')
+        }
+      );
+    }
+
   }
 
   // Método que servirá para realizar el submit del formulario (create y update)
@@ -123,7 +129,7 @@ export class PrivadoComponent implements OnInit {
     // Le metemos el nombre al pokemon, independientemente si existe o no
     this.pokemon.nombre = (datosEnviados.nombre);
     if (datosEnviados.id === 0) {
-     
+
       // llamamos al service para crear
       this.pokemonService.createPokemon(this.pokemon).subscribe(
         data => {
@@ -166,7 +172,7 @@ export class PrivadoComponent implements OnInit {
           console.debug('Finaliza la petición')
         }
       );
-      
+
     }
   }//enviarFormulario(datosEnviados)
 
