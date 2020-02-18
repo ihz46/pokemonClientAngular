@@ -13,6 +13,7 @@ import { PokemonPipe } from './pipes/pokemon.pipe';
 import { LoginComponent } from './paginas/login/login.component';
 import { PrivadoComponent } from './paginas/privado/privado.component';
 import { UsuarioService } from './services/usuario.service';
+import { MensajeComponent } from './componentes/mensaje/mensaje.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UsuarioService } from './services/usuario.service';
     FooterComponent,
     PokemonPipe,
     LoginComponent,
-    PrivadoComponent
+    PrivadoComponent,
+    MensajeComponent
 
   ],
   imports: [
