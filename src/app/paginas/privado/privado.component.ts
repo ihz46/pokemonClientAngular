@@ -18,6 +18,7 @@ export class PrivadoComponent implements OnInit {
   // Formulario
 
   formulario: FormGroup;
+  urlRegex: any;
 
   // Mensaje
   mensaje: string;
@@ -34,6 +35,9 @@ export class PrivadoComponent implements OnInit {
     //Inicializamos el pokemon que vamos a utilizar 
     this.pokemon = new Pokemon();
 
+    //Inicializamos regex
+    this.urlRegex = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
+
     // Mensajes
     this.mensaje = 'Listado de pokemon disponibles:';
 
@@ -47,6 +51,10 @@ export class PrivadoComponent implements OnInit {
         '', // valor inicial
         [Validators.required, Validators.minLength(2), Validators.maxLength(50)] // validacines
       ),
+      imagen: new FormControl(
+        '', // valor inicial
+        [Validators.required, Validators.pattern(this.urlRegex)],
+      )
     });
 
   }// Constructor()
@@ -63,6 +71,7 @@ export class PrivadoComponent implements OnInit {
     this.pokemonSeleccionado = pokemon;
     this.formulario.get('id').setValue(pokemon.id);
     this.formulario.get('nombre').setValue(pokemon.nombre);
+    this.formulario.get('imagen').setValue(pokemon.imagen);
 
   }// seleccionarPokemon(pokemon)
 
@@ -92,6 +101,7 @@ export class PrivadoComponent implements OnInit {
     console.trace('Limpiar formulario')
     this.formulario.get('nombre').setValue('');
     this.formulario.get('id').setValue(0);
+    this.formulario.get('imagen').setValue('');
     this.pokemonSeleccionado = new Pokemon();
   }
 
@@ -126,8 +136,10 @@ export class PrivadoComponent implements OnInit {
   enviarFormulario(datosEnviados) {
     console.trace('Enviar formulario %o', datosEnviados);
 
-    // Le metemos el nombre al pokemon, independientemente si existe o no
+    // Le metemos el nombre y la imagen al pokemon, independientemente si existe o no
     this.pokemon.nombre = (datosEnviados.nombre);
+    this.pokemon.imagen = (datosEnviados.imagen);
+
     if (datosEnviados.id === 0) {
 
       // llamamos al service para crear
@@ -158,7 +170,7 @@ export class PrivadoComponent implements OnInit {
         data => {
           console.debug('Datos obtenidos %o', data);
           this.tipoMensaje = 'success';
-          this.mensaje = 'Se he actualizado correctamente el pokemon ' + this.pokemon.nombre + '.';
+          this.mensaje = 'Se he actualizado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
           this.obtenerListado();
         },
 

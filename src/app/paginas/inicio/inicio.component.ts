@@ -68,9 +68,6 @@ export class InicioComponent implements OnInit {
     )
   }//obtenerListado()
 
-  comprobarBusqueda() {
-
-  }
 
   seleccionarPokemon(pokemon) {
     console.log('Click seleccionarPokemon');
