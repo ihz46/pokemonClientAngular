@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-privado',
@@ -17,12 +17,27 @@ export class PrivadoComponent implements OnInit {
 
   // Formulario
 
+  //Declaramos un formulario 
   formulario: FormGroup;
+
+  //Declaramos el array de habilidades de dentro del formulario
+  formHabilidades: FormArray;
+
+  // Regex para comprobar el formato de la URL
   urlRegex: any;
+
+  //Array de habilidades (posteriormente se añadirán)
+  habilidades: Array<any>;
 
   // Mensaje
   mensaje: string;
   tipoMensaje: string;
+
+  options = [
+    { nombre: 'impasible', id: '1', checked: false },
+    { nombre: 'rayos', id: '2', checked: false },
+    { nombre: 'oloroso', id: '3', checked: false }
+  ]
 
 
   constructor(private pokemonService: PokemonService, private builder: FormBuilder) {
@@ -43,28 +58,87 @@ export class PrivadoComponent implements OnInit {
 
     this.tipoMensaje = 'primary';
 
-    // Construimos el formulario:
-    this.formulario = this.builder.group({
-      // Definimos los formControl : input
-      id: new FormControl(0),
-      nombre: new FormControl(
-        '', // valor inicial
-        [Validators.required, Validators.minLength(2), Validators.maxLength(50)] // validacines
-      ),
-      imagen: new FormControl(
-        '', // valor inicial
-        [Validators.required, Validators.pattern(this.urlRegex)],
-      )
-    });
+    // Llamamos a un método para crear  el formulario:
+    this.crearFormulario();
 
   }// Constructor()
 
   ngOnInit() {
 
     console.trace('ngOnInit: cargamos el listado de pokemons');
+
+    // Obtenemos el listado de pokemons (getAll)
     this.obtenerListado();
 
+    // Obtenemos el listado de habilidades (getAll)
+    this.obtenerHabilidades();
+
   }// ngOnInit()
+
+  crearFormulario() {
+
+    console.trace('Empezamos a crear el formulario');
+    // Construimos el formulario
+    this.formulario = this.builder.group({
+      // Definimos los formControl : input
+      id: new FormControl(0),
+      nombre: new FormControl(
+        '', // valor inicial
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50)
+        ] // validaciones
+      ),
+      imagen: new FormControl(
+        '', // valor inicial
+        [
+          Validators.required,
+          Validators.pattern(this.urlRegex)
+        ],
+      ),// Ahora vamos a crear el array dentro del formulario
+      habilidades: this.builder.array([], // Se crea el array vacío
+        // Con esta línea se metería por defecto una habilidad
+        // [this.crearFormGroupHabilidad()]
+        [
+          Validators.required,
+          Validators.minLength(1)
+        ]
+      )
+    });
+
+    // Obtenemos las habilidades del formulario y las guardamos
+    this.formHabilidades = this.formulario.get('habilidades') as FormArray;
+
+  }// crearFormulario() 
+
+  crearFormGroupHabilidad(): FormGroup {
+    console.debug(' crearFormGroupHabilidad()');
+    return this.builder.group({
+      id: new FormControl(0),
+      nombre: new FormControl('')
+    })
+  }// crearFormGroupHabilidad()
+
+  checkCambiado(option: any) {
+    // Si esta chequeado, cambiamos a no chequeado
+    console.debug('checkCambiado %o', option);
+    option.checked = !option.checked;
+
+    const habilidad = this.crearFormGroupHabilidad();
+
+    habilidad.get('id').setValue(option.id);
+    habilidad.get('nombre').setValue(option.nombre);
+
+    if (!option.checked) {
+      this.formHabilidades.removeAt(this.formHabilidades.value.findIndex(el => el.id === option.id));
+    } else {
+      this.formHabilidades.push(habilidad);
+    }
+
+
+
+  }
 
   seleccionarPokemon(pokemon) {
     console.debug('seleccionarPokemon %o', pokemon)
@@ -95,6 +169,26 @@ export class PrivadoComponent implements OnInit {
       }
     )
   }// obtenerListado()
+
+  //Método que cargará las habilidades del service
+  obtenerHabilidades() {
+    this.pokemonService.getAllHabilidades().subscribe(
+
+      data => {
+        console.debug(data);
+        this.habilidades = data;
+      },
+
+      error => {
+        console.warn('No se han podido obtener las habilidades');
+        this.mensaje = 'Error al obtener las habilidades';
+        this.tipoMensaje = 'danger';
+      }
+    )
+
+  }// obtenerHabilidades()
+
+
 
   // Método que sirve para limpiar el formulario
   limpiarFormulario() {
@@ -133,12 +227,14 @@ export class PrivadoComponent implements OnInit {
   }
 
   // Método que servirá para realizar el submit del formulario (create y update)
+
   enviarFormulario(datosEnviados) {
     console.trace('Enviar formulario %o', datosEnviados);
 
     // Le metemos el nombre y la imagen al pokemon, independientemente si existe o no
     this.pokemon.nombre = (datosEnviados.nombre);
     this.pokemon.imagen = (datosEnviados.imagen);
+    this.pokemon.habilidades = (datosEnviados.habilidades);
 
     if (datosEnviados.id === 0) {
 
@@ -187,5 +283,6 @@ export class PrivadoComponent implements OnInit {
 
     }
   }//enviarFormulario(datosEnviados)
+
 
 }//PrivadoComponent

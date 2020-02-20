@@ -9,6 +9,10 @@
     </div>
 
 </div>
+
+{{ formulario.value | json}}
+{{ formulario.status | json }}
+
 <!--FIN DEL ROW 1-->
 <div class="row">
     <div class="col-md-6">
@@ -29,11 +33,17 @@
                 <label for="imagen">Imagen</label>
                 <input type="text" class="form-control mb-3" formControlName="imagen" autofocus>
                 <small class="form-text text-muted  mb-3">Debes introducir una url válida</small>
+
+                <!--ZONA DE HABILIDADES-->
+                <div *ngFor="let h of habilidades">
+                    <input type="checkbox" value="{{h.id}}" (change)="checkCambiado(h)" />
+                    <label>{{h.nombre}}</label>
+                </div>
                 <button type="submit" [disabled]="formulario.invalid"
                     class="btn btn-primary btn-block">{{(pokemonSeleccionado.id===0)?'Crear':'Actualizar'}}</button>
+
             </div>
 
         </form>
     </div>
-
-</div>
+    <!--cierre segundo row-->

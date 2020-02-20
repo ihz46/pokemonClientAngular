@@ -8,7 +8,7 @@ import { Pokemon } from '../model/pokemon';
   providedIn: 'root'
 })
 export class PokemonService implements IPokemonService {
-      
+
   constructor(private http: HttpClient) {
     console.trace('PokemonService constructor');
   }// Constructor
@@ -20,7 +20,7 @@ export class PokemonService implements IPokemonService {
     return this.http.post<Pokemon>(url, pokemon);
 
   }
-  
+
   // Eliminamos un pokemon
   deletePokemon(pokemon: Pokemon): Observable<Pokemon> {
     const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
@@ -31,9 +31,9 @@ export class PokemonService implements IPokemonService {
   // Actualizamos un pokemon
   updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
     const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
-    return this.http.put<Pokemon>(url,pokemon);
+    return this.http.put<Pokemon>(url, pokemon);
   }
- 
+
   //Obtenemos el listado de todos los pokemons
   getAll(): Observable<any> {
     const url = 'http://localhost:8080/pokemon-rest/api/pokemon/';
@@ -56,6 +56,13 @@ export class PokemonService implements IPokemonService {
     throw new Error("Method not implemented.");
   }
 
+  //Habilidades
+
+  getAllHabilidades(): Observable<any> {
+    const url = 'http://localhost:8080/pokemon-rest/api/habilidad/';
+    console.trace('PokemonService getAllHabilidades ' + url);
+    return this.http.get(url);
+  }
 
 
 
