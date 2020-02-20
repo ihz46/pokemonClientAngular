@@ -136,9 +136,7 @@ export class PrivadoComponent implements OnInit {
       this.formHabilidades.push(habilidad);
     }
 
-
-
-  }
+  }// checkCambiado(option: any)
 
   seleccionarPokemon(pokemon) {
     console.debug('seleccionarPokemon %o', pokemon)
@@ -147,7 +145,31 @@ export class PrivadoComponent implements OnInit {
     this.formulario.get('nombre').setValue(pokemon.nombre);
     this.formulario.get('imagen').setValue(pokemon.imagen);
 
+    //Llamamos al método que nos pondrá checked cada habilidad de los pokemon
+
+    this.marcarHabilidades(pokemon);
+
   }// seleccionarPokemon(pokemon)
+
+  marcarHabilidades(pokemon: Pokemon) {
+
+    //Cojemos las habilidades y hacemos un map, recorremos cada una de ellas 
+    if (!pokemon) {
+      this.habilidades = this.habilidades.map(h => {
+        console.debug('map');
+
+        //Sacamos la posición de cada habilidad y las comparamos con las del pokemon
+        const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
+        if (posicion !== -1) {
+          h.checked = true;
+        } else {
+          h.cheched = false;
+        }
+      });
+    }
+
+
+  }
 
   // Método para obtener todos los pokemon
   obtenerListado() {
@@ -176,7 +198,9 @@ export class PrivadoComponent implements OnInit {
 
       data => {
         console.debug(data);
-        this.habilidades = data;
+        this.habilidades = data.map(el => {
+          return { nombre: el.nombre, id: el.id, checked: false }
+        });
       },
 
       error => {
@@ -188,16 +212,17 @@ export class PrivadoComponent implements OnInit {
 
   }// obtenerHabilidades()
 
-
-
   // Método que sirve para limpiar el formulario
-  limpiarFormulario() {
+  limpiarFormulario(option: any) {
     console.trace('Limpiar formulario')
     this.formulario.get('nombre').setValue('');
     this.formulario.get('id').setValue(0);
     this.formulario.get('imagen').setValue('');
     this.pokemonSeleccionado = new Pokemon();
-  }
+
+    //TODO: Poner todos los checked  a false
+
+  }// limpiarFormulario() 
 
   eliminarPokemon(pokemon) {
     //Ventana modal para confirmar que se desea eliminar el pokemon
@@ -231,7 +256,7 @@ export class PrivadoComponent implements OnInit {
   enviarFormulario(datosEnviados) {
     console.trace('Enviar formulario %o', datosEnviados);
 
-    // Le metemos el nombre y la imagen al pokemon, independientemente si existe o no
+    // Le metemos el nombre, la imagen al pokemon y sus habilidades independientemente de si existe o no
     this.pokemon.nombre = (datosEnviados.nombre);
     this.pokemon.imagen = (datosEnviados.imagen);
     this.pokemon.habilidades = (datosEnviados.habilidades);

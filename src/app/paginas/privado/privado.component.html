@@ -19,8 +19,12 @@
         <ul class="list-group">
             <li class="list-group-item lista {{(p == pokemonSeleccionado)?'active': ''}}"
                 (click)="seleccionarPokemon(p)" *ngFor="let p of listaPokemon">
-                {{p.id}}-{{p.nombre}}
-                <button class="fas fa-trash-alt boton-eliminar" (click)="eliminarPokemon(p)"></button>
+                <div class="contenedor-lista">
+                    <b>{{p.id}}</b><img src="{{p.imagen}}" class="imagen" alt="imagen del pokemon {{p.nombre}}"> -
+                    <span>
+                        {{p.nombre | titlecase }}</span>
+                    <button class="fas fa-trash-alt boton-eliminar" (click)="eliminarPokemon(p)"></button>
+                </div>
             </li>
         </ul>
     </div>
@@ -36,10 +40,15 @@
 
                 <!--ZONA DE HABILIDADES-->
                 <div *ngFor="let h of habilidades">
-                    <input type="checkbox" value="{{h.id}}" (change)="checkCambiado(h)" />
-                    <label>{{h.nombre}}</label>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="options" value="{{h.id}}"
+                            (change)="checkCambiado(h)" id="check{{h.id}}">
+                        <label class="custom-control-label" for="check{{h.id}}">{{h.nombre | titlecase }}</label>
+                    </div>
+
                 </div>
-                <button type="submit" [disabled]="formulario.invalid"
+                <button type=" submit" [disabled]="formulario.invalid"
                     class="btn btn-primary btn-block">{{(pokemonSeleccionado.id===0)?'Crear':'Actualizar'}}</button>
 
             </div>
