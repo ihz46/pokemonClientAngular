@@ -144,17 +144,18 @@ export class PrivadoComponent implements OnInit {
 
 
 
-
     //Llamamos al método que nos pondrá checked cada habilidad de los pokemon
+    if (this.pokemonSeleccionado) {
+      this.marcarHabilidades(this.pokemonSeleccionado);
+    }
 
-    this.marcarHabilidades(pokemon);
 
   }// seleccionarPokemon(pokemon)
 
   marcarHabilidades(pokemon: Pokemon) {
-
+    console.trace('marcarHabilidades(pokemon: Pokemon) ')
     //Cojemos las habilidades y hacemos un map, recorremos cada una de ellas 
-    if (!pokemon) {
+    if (pokemon) {
       this.habilidades = this.habilidades.map(h => {
         console.debug('map');
 
@@ -162,9 +163,11 @@ export class PrivadoComponent implements OnInit {
         const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
         if (posicion !== -1) {
           h.checked = true;
+          this.habilidades.forEach(h => this.habilidades.push(h));
         } else {
           h.checked = false;
         }
+        return h;
       });
     }
 
