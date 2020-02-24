@@ -1,9 +1,6 @@
+<app-mensaje [mensaje]="mensaje"></app-mensaje>
 <div class="row">
-    <div class="col">
-        <div class="alert alert-{{tipoMensaje}}" role="alert">
-            {{mensaje}}
-        </div>
-    </div>
+
     <div class="col">
         <input class="btn btn-secondary" type="button" value="Nuevo" (click)="limpiarFormulario()">
     </div>
@@ -43,7 +40,7 @@
 
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="options" value="{{h.id}}"
-                            (change)="checkCambiado(h)" id="check{{h.id}}">
+                            (change)="checkCambiado(h)" id="check{{h.id}}" [checked]="h.checked">
                         <label class="custom-control-label" for="check{{h.id}}">{{h.nombre | titlecase }}</label>
                     </div>
 

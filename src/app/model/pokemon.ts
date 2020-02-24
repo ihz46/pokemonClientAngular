@@ -7,7 +7,7 @@ export class Pokemon {
 
     imagen: string;
 
-    habilidades: Array<String>;
+    habilidades: Array<any>;
 
 
 

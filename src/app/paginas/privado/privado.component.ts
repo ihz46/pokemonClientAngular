@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { Pokemon } from 'src/app/model/pokemon';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { Mensaje } from 'src/app/model/mensaje';
 
 @Component({
   selector: 'app-privado',
@@ -30,14 +31,10 @@ export class PrivadoComponent implements OnInit {
   habilidades: Array<any>;
 
   // Mensaje
-  mensaje: string;
-  tipoMensaje: string;
+  mensaje: Mensaje;
 
-  options = [
-    { nombre: 'impasible', id: '1', checked: false },
-    { nombre: 'rayos', id: '2', checked: false },
-    { nombre: 'oloroso', id: '3', checked: false }
-  ]
+
+
 
 
   constructor(private pokemonService: PokemonService, private builder: FormBuilder) {
@@ -54,9 +51,9 @@ export class PrivadoComponent implements OnInit {
     this.urlRegex = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
 
     // Mensajes
-    this.mensaje = 'Listado de pokemon disponibles:';
+    this.mensaje = new Mensaje();
 
-    this.tipoMensaje = 'primary';
+    this.mensaje.mensaje = 'Estos son todos los pokemons disponibles:';
 
     // Llamamos a un método para crear  el formulario:
     this.crearFormulario();
@@ -145,6 +142,9 @@ export class PrivadoComponent implements OnInit {
     this.formulario.get('nombre').setValue(pokemon.nombre);
     this.formulario.get('imagen').setValue(pokemon.imagen);
 
+
+
+
     //Llamamos al método que nos pondrá checked cada habilidad de los pokemon
 
     this.marcarHabilidades(pokemon);
@@ -163,7 +163,7 @@ export class PrivadoComponent implements OnInit {
         if (posicion !== -1) {
           h.checked = true;
         } else {
-          h.cheched = false;
+          h.checked = false;
         }
       });
     }
@@ -183,8 +183,8 @@ export class PrivadoComponent implements OnInit {
 
       error => {
         console.warn('Error al obtener el listado de pokemon');
-        this.mensaje = 'Error al obtener el listado de pokemons';
-        this.tipoMensaje = 'danger';
+        this.mensaje.mensaje = 'Error al obtener el listado de pokemons';
+        this.mensaje.tipoMensaje = 'danger';
       },
       () => {
         console.trace('Estamos intentando obtener el listado');
@@ -205,24 +205,25 @@ export class PrivadoComponent implements OnInit {
 
       error => {
         console.warn('No se han podido obtener las habilidades');
-        this.mensaje = 'Error al obtener las habilidades';
-        this.tipoMensaje = 'danger';
+        this.mensaje.mensaje = 'Error al obtener las habilidades';
+        this.mensaje.tipoMensaje = 'danger';
       }
     )
 
   }// obtenerHabilidades()
 
   // Método que sirve para limpiar el formulario
-  limpiarFormulario(option: any) {
+  limpiarFormulario() {
     console.trace('Limpiar formulario')
     this.formulario.get('nombre').setValue('');
     this.formulario.get('id').setValue(0);
     this.formulario.get('imagen').setValue('');
     this.pokemonSeleccionado = new Pokemon();
 
-    //TODO: Poner todos los checked  a false
+    // Poner todos los checked  a false
+    this.habilidades.forEach(habilidad => habilidad.checked = false);
 
-  }// limpiarFormulario() 
+  }// limpiarFormulario()
 
   eliminarPokemon(pokemon) {
     //Ventana modal para confirmar que se desea eliminar el pokemon
@@ -232,15 +233,15 @@ export class PrivadoComponent implements OnInit {
       this.pokemonService.deletePokemon(this.pokemonSeleccionado).subscribe(
         data => {
           console.debug('Datos obtenidos %o', data);
-          this.mensaje = 'Se he eliminado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
-          this.tipoMensaje = 'success';
+          this.mensaje.mensaje = 'Se he eliminado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
+          this.mensaje.tipoMensaje = 'success';
           this.obtenerListado();
         },
 
         error => {
           console.debug('Petición erronea %o', error);
-          this.mensaje = 'Error al eliminar el pokemon';
-          this.tipoMensaje = 'danger';
+          this.mensaje.mensaje = 'Error al eliminar el pokemon';
+          this.mensaje.tipoMensaje = 'danger';
         },
 
         () => {
@@ -267,15 +268,15 @@ export class PrivadoComponent implements OnInit {
       this.pokemonService.createPokemon(this.pokemon).subscribe(
         data => {
           console.debug('Datos obtenidos %o', data);
-          this.tipoMensaje = 'success';
-          this.mensaje = 'Se he creado correctamente el pokemon ' + this.pokemon.nombre + '.';
+          this.mensaje.tipoMensaje = 'success';
+          this.mensaje.mensaje = 'Se he creado correctamente el pokemon ' + this.pokemon.nombre + '.';
           this.obtenerListado();
         },
 
         error => {
           console.debug('Petición erronea %o', error);
-          this.mensaje = 'Error al crear el pokemon ' + this.pokemon.nombre + '.';
-          this.tipoMensaje = 'danger';
+          this.mensaje.mensaje = 'Error al crear el pokemon ' + this.pokemon.nombre + '.';
+          this.mensaje.tipoMensaje = 'danger';
         },
 
         () => {
@@ -290,15 +291,15 @@ export class PrivadoComponent implements OnInit {
       this.pokemonService.updatePokemon(this.pokemon).subscribe(
         data => {
           console.debug('Datos obtenidos %o', data);
-          this.tipoMensaje = 'success';
-          this.mensaje = 'Se he actualizado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
+          this.mensaje.tipoMensaje = 'success';
+          this.mensaje.mensaje = 'Se he actualizado correctamente el pokemon ' + this.pokemonSeleccionado.nombre + '.';
           this.obtenerListado();
         },
 
         error => {
           console.debug('Petición erronea %o', error);
-          this.mensaje = 'Error al actualizar el pokemon' + this.pokemon.nombre + '.';
-          this.tipoMensaje = 'danger';
+          this.mensaje.mensaje = 'Error al actualizar el pokemon' + this.pokemon.nombre + '.';
+          this.mensaje.tipoMensaje = 'danger';
         },
 
         () => {

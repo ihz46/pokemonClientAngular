@@ -2,8 +2,8 @@ export class Mensaje {
     mensaje: string;
     tipoMensaje: string;
 
-    constructor(mensaje: string, tipoMensaje: string) {
+    constructor() {
         this.mensaje = '';
-        this.tipoMensaje = '';
+        this.tipoMensaje = 'primary';
     }
 }
