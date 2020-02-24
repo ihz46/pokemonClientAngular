@@ -138,16 +138,19 @@ export class PrivadoComponent implements OnInit {
   seleccionarPokemon(pokemon) {
     console.debug('seleccionarPokemon %o', pokemon)
     this.pokemonSeleccionado = pokemon;
+    //Creamos el formulario de nuevo
+    this.crearFormulario();
+
     this.formulario.get('id').setValue(pokemon.id);
     this.formulario.get('nombre').setValue(pokemon.nombre);
     this.formulario.get('imagen').setValue(pokemon.imagen);
-
-
 
     //Llamamos al método que nos pondrá checked cada habilidad de los pokemon
     if (this.pokemonSeleccionado) {
       this.marcarHabilidades(this.pokemonSeleccionado);
     }
+
+    // poner las habilidades del pokemon en el formulario.(son de tipo formgroup)
 
 
   }// seleccionarPokemon(pokemon)
@@ -163,7 +166,18 @@ export class PrivadoComponent implements OnInit {
         const posicion = this.pokemonSeleccionado.habilidades.findIndex(el => el.id === h.id);
         if (posicion !== -1) {
           h.checked = true;
-          this.habilidades.forEach(h => this.habilidades.push(h));
+          //Guardamos en el array
+
+          //this.habilidades.forEach(h => this.habilidades.push(h));
+
+          //Guardamos en el formulario
+
+          const habilidad = this.crearFormGroupHabilidad();
+
+          habilidad.get('id').setValue(h.id);
+          habilidad.get('nombre').setValue(h.nombre);
+          this.formHabilidades.push(habilidad);
+
         } else {
           h.checked = false;
         }
@@ -218,10 +232,13 @@ export class PrivadoComponent implements OnInit {
   // Método que sirve para limpiar el formulario
   limpiarFormulario() {
     console.trace('Limpiar formulario')
-    this.formulario.get('nombre').setValue('');
+    /*this.formulario.get('nombre').setValue('');
     this.formulario.get('id').setValue(0);
     this.formulario.get('imagen').setValue('');
     this.pokemonSeleccionado = new Pokemon();
+    this.formHabilidades = [];*/
+    this.crearFormulario();
+    //this.formulario.reset();
 
     // Poner todos los checked  a false
     this.habilidades.forEach(habilidad => habilidad.checked = false);
