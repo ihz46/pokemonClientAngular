@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IPokemonService } from './Ipokemon.service';
 import { Observable } from 'rxjs';
 import { Pokemon } from '../model/pokemon';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -16,27 +17,27 @@ export class PokemonService implements IPokemonService {
 
   // Creamos un pokemon
   createPokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/';
+    const url = environment.endpoint + 'pokemon/';
     return this.http.post<Pokemon>(url, pokemon);
 
   }
 
   // Eliminamos un pokemon
   deletePokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
+    const url = environment.endpoint + `pokemon/${pokemon.id}/`;
     console.debug(url);
     return this.http.delete<Pokemon>(url);
   }
 
   // Actualizamos un pokemon
   updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = `http://localhost:8080/pokemon-rest/api/pokemon/${pokemon.id}/`;
+    const url = environment.endpoint + `pokemon/${pokemon.id}/`;
     return this.http.put<Pokemon>(url, pokemon);
   }
 
   //Obtenemos el listado de todos los pokemons
   getAll(): Observable<any> {
-    const url = 'http://localhost:8080/pokemon-rest/api/pokemon/';
+    const url = environment.endpoint + 'pokemon/';
     console.trace('PokemonService getAll ' + url);
     return this.http.get(url);
   }
@@ -59,14 +60,9 @@ export class PokemonService implements IPokemonService {
   //Habilidades
 
   getAllHabilidades(): Observable<any> {
-    const url = 'http://localhost:8080/pokemon-rest/api/habilidad/';
+    const url = environment.endpoint + '/habilidad/';
     console.trace('PokemonService getAllHabilidades ' + url);
     return this.http.get(url);
   }
-
-
-
-
-
 
 }

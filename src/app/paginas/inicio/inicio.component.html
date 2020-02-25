@@ -1,16 +1,12 @@
+<app-mensaje [mensaje]="mensaje"></app-mensaje>
 <div class="row">
-    <div class="col-md-6 mb-2">
-        <div class="alert alert-primary" *ngIf="!pokemonBuscado" role="alert">
-            {{mensaje}}
-        </div>
-        <div class="input-group">
-            <input type="text" class="form-control mb-2" [(ngModel)]="pokemonBuscado" autofocus>
-            <div class="input-group-append">
-                <span class="input-group-text fas fa-search mb-2"></span>
-            </div>
-        </div>
 
-
+    <div class="input-group col-md-6">
+        <input type="text" class="form-control mb-2" placeholder="Puedes buscar pokemon por su NOMBRE o HABILIDAD"
+            [(ngModel)]="pokemonBuscado" autofocus>
+        <div class="input-group-append">
+            <span class="input-group-text fas fa-search mb-2"></span>
+        </div>
     </div>
 
     <!-- <div class="col-md-6">

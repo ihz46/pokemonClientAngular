@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   //Creamos el usuario
   usuario: Usuario;
+  formulario: any;
+
 
   constructor(private builder: FormBuilder, private usuarioService: UsuarioService, private router: Router) {
 
@@ -22,4 +24,7 @@ export class LoginComponent implements OnInit {
 
   }//ngOnInit
 
+  enviar(values: any) {
+
+  }
 }
