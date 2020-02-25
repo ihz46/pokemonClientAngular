@@ -242,6 +242,7 @@ export class PrivadoComponent implements OnInit {
 
     // Poner todos los checked  a false
     this.habilidades.forEach(habilidad => habilidad.checked = false);
+    this.pokemonSeleccionado = new Pokemon();
 
   }// limpiarFormulario()
 
