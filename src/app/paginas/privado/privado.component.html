@@ -1,8 +1,8 @@
 <app-mensaje [mensaje]="mensaje"></app-mensaje>
 <div class="row">
 
-    <div class="col">
-        <input class="btn btn-secondary" type="button" value="Nuevo" (click)="limpiarFormulario()">
+    <div class="col-md-6">
+        <input class="btn btn-primary btn-block mb-2" type="button" value="Nuevo pokemon" (click)="limpiarFormulario()">
     </div>
 
 </div>
@@ -12,9 +12,10 @@
     <div class="col-md-6">
         <ul class="list-group">
             <li class="list-group-item lista {{(p == pokemonSeleccionado)?'active': ''}}"
-                (click)="seleccionarPokemon(p)" *ngFor="let p of listaPokemon">
+                (click)="seleccionarPokemon(p)" *ngFor="let p of listaPokemon | sort : p">
                 <div class="contenedor-lista">
-                    <b>{{p.id}}</b><img src="{{p.imagen}}" class="imagen" alt="imagen del pokemon {{p.nombre}}"> -
+                    <span class="badge badge-secondary">{{p.id}}</span><img src="{{p.imagen}}" class="imagen"
+                        alt="imagen del pokemon {{p.nombre}}"> -
                     <span>
                         {{p.nombre | titlecase }}</span>
                     <button class="fas fa-trash-alt boton-eliminar" (click)="eliminarPokemon(p)"></button>
@@ -33,7 +34,7 @@
                 <small class="form-text text-muted  mb-3">Debes introducir una url válida</small>
 
                 <!--ZONA DE HABILIDADES-->
-                <div *ngFor="let h of habilidades">
+                <div *ngFor="let h of habilidades" class="mb-3">
 
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="options" value="{{h.id}}"
