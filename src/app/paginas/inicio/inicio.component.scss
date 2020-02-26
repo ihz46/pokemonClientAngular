@@ -1,0 +1,18 @@
+.cardInicial{
+    filter: grayscale(90%);
+}
+
+.card-body{
+    border:2px solid #007bff;
+}
+
+.list-group{
+    border:2px solid #007bff;
+}
+
+img{
+    .card-img-top{
+        max-width:80%;
+        max-height:400px;
+    }
+}

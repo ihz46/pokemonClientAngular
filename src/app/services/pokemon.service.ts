@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IPokemonService } from './Ipokemon.service';
 import { Observable } from 'rxjs';
 import { Pokemon } from '../model/pokemon';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,27 +17,27 @@ export class PokemonService implements IPokemonService {
 
   // Creamos un pokemon
   createPokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = environment.endpoint + 'pokemon/';
+    const url = environment.ENDPOINT + 'pokemon/';
     return this.http.post<Pokemon>(url, pokemon);
 
   }
 
   // Eliminamos un pokemon
   deletePokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = environment.endpoint + `pokemon/${pokemon.id}/`;
+    const url = environment.ENDPOINT + `pokemon/${pokemon.id}/`;
     console.debug(url);
     return this.http.delete<Pokemon>(url);
   }
 
   // Actualizamos un pokemon
   updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
-    const url = environment.endpoint + `pokemon/${pokemon.id}/`;
+    const url = environment.ENDPOINT + `pokemon/${pokemon.id}/`;
     return this.http.put<Pokemon>(url, pokemon);
   }
 
   //Obtenemos el listado de todos los pokemons
   getAll(): Observable<any> {
-    const url = environment.endpoint + 'pokemon/';
+    const url = environment.ENDPOINT + 'pokemon/';
     console.trace('PokemonService getAll ' + url);
     return this.http.get(url);
   }
@@ -60,7 +60,7 @@ export class PokemonService implements IPokemonService {
   //Habilidades
 
   getAllHabilidades(): Observable<any> {
-    const url = environment.endpoint + '/habilidad/';
+    const url = environment.ENDPOINT + '/habilidad/';
     console.trace('PokemonService getAllHabilidades ' + url);
     return this.http.get(url);
   }

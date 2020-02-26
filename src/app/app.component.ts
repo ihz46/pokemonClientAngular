@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   title = 'pokemonClientAngularApp';
 
   ngOnInit(): void {
-    console.debug(environment.endpoint)
+    console.debug(environment.ENDPOINT)
   }
 }

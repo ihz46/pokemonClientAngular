@@ -8,7 +8,8 @@ import { PrivadoComponent } from './paginas/privado/privado.component';
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'privado', component: PrivadoComponent }
+  { path: 'privado', component: PrivadoComponent },
+  { path: '**', component: InicioComponent }
 ];
 
 @NgModule({

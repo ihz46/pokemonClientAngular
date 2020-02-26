@@ -22,6 +22,9 @@ export class InicioComponent implements OnInit {
   //Busqueda por nombre
   pokemonBuscado: string;
 
+  //Pintamos el pokemon en gris
+  pokemonGris: boolean;
+
   constructor(private pokemonService: PokemonService) {
     console.trace('InicioComponent constructor')
     this.listaPokemon = new Array<Pokemon>();
@@ -33,6 +36,8 @@ export class InicioComponent implements OnInit {
     this.mensaje = new Mensaje();
 
     this.mensaje.mensaje = 'Bienvenido a la app de Pokemon';
+
+    this.pokemonGris = true;
 
   }//constructor()
 
@@ -69,7 +74,7 @@ export class InicioComponent implements OnInit {
           return previous.concat(currently.habilidades);
         }, []);
         console.debug('habilidades %o', this.habilidades);
-
+        this.pokemonGris = true;
         this.pokemonSeleccionado = data[0];
       },
 
@@ -87,6 +92,7 @@ export class InicioComponent implements OnInit {
 
   seleccionarPokemon(pokemon) {
     console.log('Click seleccionarPokemon');
+    this.pokemonGris = false;
     this.pokemonSeleccionado = pokemon;
 
   }//seleccionarPokemon
