@@ -11,6 +11,7 @@ import { Mensaje } from 'src/app/model/mensaje';
 })
 export class PrivadoComponent implements OnInit {
 
+
   // Pokemon
   listaPokemon: Array<any>;
   pokemonSeleccionado: Pokemon;
@@ -32,6 +33,12 @@ export class PrivadoComponent implements OnInit {
 
   // Mensaje
   mensaje: Mensaje;
+
+  //Filtro ordenación
+
+  orden: string;
+
+  campo: string;
 
 
 
@@ -57,6 +64,11 @@ export class PrivadoComponent implements OnInit {
 
     // Llamamos a un método para crear  el formulario:
     this.crearFormulario();
+
+    // Inicializamos el filtro (así se carga la option del select)
+    this.orden = '-';
+    this.campo = 'id';
+
 
   }// Constructor()
 
