@@ -12,13 +12,6 @@
     <div class="col-md-6">
         <div class="row mb-3">
             <div class="col">
-                <select class="form-control" [(ngModel)]="campo">
-                    <option value="id">Id</option>
-                    <option value="nombre">Nombre</option>
-                </select>
-            </div>
-            <!--Cierre col campo-->
-            <div class="col">
                 <select class="form-control" [(ngModel)]="orden">
                     <option value="+"> Ascendente</option>
                     <option value="-" selected>Descendente</option>
@@ -30,7 +23,7 @@
 
         <ul class="list-group">
             <li class="list-group-item lista {{(p == pokemonSeleccionado)?'active': ''}}"
-                (click)="seleccionarPokemon(p)" *ngFor="let p of listaPokemon | sort : orden : campo ">
+                (click)="seleccionarPokemon(p)" *ngFor="let p of listaPokemon | sort : orden  ">
                 <div class="contenedor-lista">
                     <span class="badge badge-secondary">{{p.id}}</span><img src="{{p.imagen}}" class="imagen"
                         alt="imagen del pokemon {{p.nombre}}"> -

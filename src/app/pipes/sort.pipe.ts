@@ -6,31 +6,24 @@ import { Pokemon } from '../model/pokemon';
 })
 export class SortPipe implements PipeTransform {
 
-  //Preparamos variables para usar después.
-  nombreMayus1: string;
-  nombreMayus2: string;
 
   constructor() {
-    this.nombreMayus1 = '';
-    this.nombreMayus2 = '';
+
   }
 
-  transform(array: Array<Pokemon>, orden: string, campo: string): Array<Pokemon> {
+  transform(array: Array<Pokemon>, orden: string): Array<Pokemon> {
 
     console.log(orden);
 
     array.sort((p1, p2) => {
-      this.nombreMayus1 = p1.nombre.toUpperCase();
-      this.nombreMayus2 = p2.nombre.toUpperCase();
 
-      if (campo === 'id') {
-        if (orden === "+") {
-          return p1.id - p2.id;
-        } else {
-          return p2.id - p1.id;
-        }
+      if (orden === "+") {
+        return p1.id - p2.id;
+      } else {
+        return p2.id - p1.id;
       }
-      //TODO: ARREGLAR EL TEMA DEL NOMBRE!!
+
+      /*TODO: ARREGLAR EL TEMA DEL NOMBRE!!
       if (campo === 'nombre') {
         console.log(campo);
         if (orden === "+") {

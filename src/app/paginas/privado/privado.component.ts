@@ -38,11 +38,6 @@ export class PrivadoComponent implements OnInit {
 
   orden: string;
 
-  campo: string;
-
-
-
-
 
   constructor(private pokemonService: PokemonService, private builder: FormBuilder) {
     // Inicializamos la lista
@@ -55,7 +50,7 @@ export class PrivadoComponent implements OnInit {
     this.pokemon = new Pokemon();
 
     //Inicializamos regex
-    this.urlRegex = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
+    //this.urlRegex = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi;
 
     // Mensajes
     this.mensaje = new Mensaje();
@@ -67,7 +62,7 @@ export class PrivadoComponent implements OnInit {
 
     // Inicializamos el filtro (así se carga la option del select)
     this.orden = '-';
-    this.campo = 'id';
+
 
 
   }// Constructor()
@@ -103,7 +98,9 @@ export class PrivadoComponent implements OnInit {
         '', // valor inicial
         [
           Validators.required,
-          Validators.pattern(this.urlRegex)
+          Validators.minLength(10),
+
+          //Validators.pattern(this.urlRegex)
         ],
       ),// Ahora vamos a crear el array dentro del formulario
       habilidades: this.builder.array([], // Se crea el array vacío
